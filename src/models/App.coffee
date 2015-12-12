@@ -27,22 +27,24 @@ class window.App extends Backbone.Model
 
   dealerTurn: (dealer) ->
     console.log('Dealer\'s Turn, appModel')
-    while dealer.scores()[1] < 17
+    console.log(dealer.scores()[2])
+    while dealer.scores()[2] < 17 and dealer.scores()[2] > 0
       dealer.hit()
       console.log(dealer.scores()[1])
+    @gameOver()
+  
+  gameOver: ->
     @countScores()
+    dealer = @get 'dealerHand'
+    dealer.reveal()
 
   countScores: ->
     player = @get 'playerHand'
     dealer = @get 'dealerHand'
-    
+
     if player.bestScore() > dealer.bestScore()
       console.log("Dealer has #{dealer.bestScore()}. You win!")
     
     else
       console.log("Dealer has #{dealer.bestScore()}. You lose!")
-    
-    #if player.scores[]
-    #console.log("You win")
-    #console.log("Dealer wins")
 

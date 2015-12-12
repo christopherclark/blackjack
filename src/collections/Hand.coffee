@@ -15,7 +15,7 @@ class window.Hand extends Backbone.Collection
   , 0
 
   minScore: -> @reduce (score, card) ->
-    score + if card.get 'revealed' then card.get 'value' else 0
+    score + card.get 'value'
   , 0
 
   maxScore: -> @minScore() + 10 * @hasAce()
@@ -32,4 +32,7 @@ class window.Hand extends Backbone.Collection
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @maxScore(), @bestScore()]
 
+  reveal: ->
+    @trigger('reveal')
+    
 
