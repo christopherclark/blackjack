@@ -2,6 +2,16 @@
   box-sizing: border-box;
 }
 
+#message-bar {
+  height: 3rem;
+  padding: 1.5rem 0;
+}
+
+#message-bar h3 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
 .card {
   position: relative;
   float: left;
@@ -37,10 +47,6 @@
 
 .covered {
   -webkit-transform: rotateY(-180deg);
-}
-
-.covered .back {
-  /*z-index: 1;*/
 }
 
 .hand {

@@ -7,8 +7,9 @@ class window.Hand extends Backbone.Collection
     @add(@deck.pop())
 
   stand: ->
+    console.log('stand', @)
     @trigger('stand')
-    console.log("Stand")
+    
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -34,5 +35,8 @@ class window.Hand extends Backbone.Collection
 
   reveal: ->
     @trigger('reveal')
+
+  #money:
+    
     
 
