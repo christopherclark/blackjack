@@ -3,13 +3,34 @@
 }
 
 #message-bar {
-  height: 3rem;
-  padding: 1.5rem 0;
+  width: 48%;
 }
 
-#message-bar h3 {
+.meta-bar {
+  height: 3rem;
+  padding: 0.5rem 0 0;
+  margin: 1.25rem 0 0;
   font-size: 1.5rem;
+}
+
+.meta-bar h3 {
   margin: 0;
+}
+
+.meta-bar > div {
+  float: left;
+  height: 100%;
+}
+
+#money-bar {
+  width: 25%;
+  margin-right: 2.5%;
+}
+
+.meta-bar::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
 .card {

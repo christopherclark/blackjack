@@ -7,50 +7,63 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
     @trigger 'newGame'
+    playerMoney = @get 'playerMoney'
+    playerMoney ||= 500
+    @set 'playerMoney', playerMoney-10
+    @trigger 'money'
 
     player = @get 'playerHand'
     dealer = @get 'dealerHand'
     that = @
 
     player.on 'stand', =>
-      console.log('stand, appModel')
       @dealerTurn(dealer)
     
     player.on 'add', =>
-      console.log('player added, appModel')
       if player.scores()[0] > 21 then @bust(player.isDealer)
 
     dealer.on 'add', =>
-      console.log('dealer added, appModel')
       if dealer.scores()[0] > 21 then @bust(dealer.isDealer)
       else _.delay ->
             that.dealerTurn(dealer)
           , 1000
 
   bust: (dealerBusts) ->
-    if dealerBusts then @trigger('bust', 'dealer')
-    else @trigger('bust', 'player')
+    player = @get 'playerHand'
+    if dealerBusts 
+      @trigger('bust', 'dealer')
+      playerMoney = @get 'playerMoney'
+      if player.bestScore() == 21
+        @set 'playerMoney', playerMoney+15
+      else
+        @set 'playerMoney', playerMoney+10
+      @trigger 'money'
+    else 
+      @trigger('bust', 'player')
     @gameOver(true)
 
   dealerTurn: (dealer) ->
-    console.log('Dealer\'s Turn, appModel')
-    console.log(dealer.scores()[2])
     if dealer.scores()[2] > 0 and dealer.scores()[2] < 17
       dealer.hit()
     else @gameOver()
   
   gameOver: (param) ->
     if !param then @countScores()
-    console.log 'gameOver'
     dealer = @get 'dealerHand'
     dealer.reveal()
 
   countScores: ->
     player = @get 'playerHand'
+    playerMoney = @get 'playerMoney'
     dealer = @get 'dealerHand'
 
     if player.bestScore() > dealer.bestScore()
       @trigger('game', dealer.bestScore(),'player')
+      if player.bestScore() == 21
+        @set 'playerMoney', playerMoney+15
+      else
+        @set 'playerMoney', playerMoney+10
+      @trigger 'money'
     else
       @trigger('game', dealer.bestScore(),'dealer')
 
