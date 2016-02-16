@@ -1,1 +1,1 @@
-This is a simple blackjack game using Backbone.js and CoffeeScript
+This is a simple blackjack game built with Backbone.js and CoffeeScript.
